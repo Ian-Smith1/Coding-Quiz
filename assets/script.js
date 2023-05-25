@@ -1,22 +1,19 @@
-var start = document.querySelector("start");
-var done = document.querySelector("submit");
-var playerScore = document.querySelector("playerScore");
-
-start.onclick = startQuiz;
-done.onclick = submitScore;
+var start = document.querySelector(".start");
+var done = document.querySelector(".submit");
+var playerScore = document.querySelector(".playerScore");
 
 var score = 0;
 var clock = 101;
 
-var timer = document.querySelector("timer");
-var initialsBox = document.querySelector("playerInitialsBox");
-var initials = document.querySelector("initials");
-var scores = doument.querySelector("playerScoreList");
+var timer = document.querySelector(".timer");
+var initialsBox = document.querySelector(".playerInitialsBox");
+var initials = document.querySelector(".initials");
+var scores = document.querySelector(".playerScoreList");
 var leaderboard = [];
-var questionSection = document.querySelector("questionSection");
-var readyPrompt = document.querySelector("readyPrompt");
-var questionResult = document.querySelector("questionResult");
-var playerReady = document.querySelector("playerReady");
+var questionSection = document.querySelector(".questionSection");
+var readyPrompt = document.querySelector(".readyPrompt");
+var questionResult = document.querySelector(".questionResult");
+var playerReady = document.querySelector(".playerReady");
 var currentQuestion;
 var currentQuestionIndex = 0;
 
@@ -52,7 +49,7 @@ var questions = [
 function showQuestion() {
   currentQuestion = questions[currentQuestionIndex];
   readyPrompt.textContent = currentQuestion.title;
-  playerReady.innerHTML = "";
+  playerReady.append = "";
 
   for (var i = 0; i < currentQuestion.length; i++) {
     var choiceButton = Object.assign(document.createElement("button"), {
@@ -84,11 +81,11 @@ function pausedTime() {
 
 playerReady.addEventListener("click", function (e) {
   var playerAnswer = e.target;
-  if (playerAnswer.matches("start") === false) {
+  if (playerAnswer.matches(".start") === false) {
     var results;
     if (
       playerAnswer.textContent.substring(3) ===
-      questions[currentQuestionIndex].answer
+      questions[currentQuestionIndex].result
     ) {
       score = score + 1;
       results = "CORRECT";
@@ -97,7 +94,7 @@ playerReady.addEventListener("click", function (e) {
       clock = clock - 15;
       results = "INCORRECT";
     }
-    questionResult.innerHTML = results;
+    questionResult.append = results;
     currentQuestionIndex++;
     if (currentQuestionIndex === questions.length) {
       end();
@@ -127,4 +124,34 @@ function submission() {
   pausedTime();
   playerInitialsBox.removeAttribute("hidden");
   questionResult.textContent = "Enter your initials here!";
+}
+
+start.addEventListener("click", function (e) {
+  e.preventDefault();
+  var playerInitals = playerInitals.value;
+  if (playerInitals === "") {
+    playerInitals = alert("Input valid initials");
+  } else {
+    playerInitals.value = " ";
+    var playerScore = playerInitals.concat(":", score);
+    leaderboard.push(playerScore);
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+    var rank = document.createElement("li");
+    rank.textContent = playerScore;
+    scores.appendChild(rank);
+  }
+});
+
+function showScores() {
+  leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+  if (leaderboard === null) {
+    leaderboard = [];
+  } else {
+    var showLeaderboard = leaderboard.sort();
+    for (var i = 0; i < showLeaderboard.length; i++) {
+      var ranking = document.createElement("li");
+      ranking.textContent = showLeaderboard[i];
+      scores.appendChild(rank);
+    }
+  }
 }
