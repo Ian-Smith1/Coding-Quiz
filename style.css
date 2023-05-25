@@ -1,0 +1,89 @@
+* {
+  background-color: lightgoldenrodyellow;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  text-align: center;
+}
+
+.heading {
+  color: darkslategray;
+  font-size: 45px;
+}
+
+.questionResult {
+  color: darkslategray;
+}
+
+.timerAndLeaderboard {
+  display: flex;
+  justify-content: space-between;
+  height: 125px;
+}
+
+.timerAndLeaderboard h2 {
+  text-align: center;
+  color: darkslategray;
+  font-size: 20px;
+}
+.scoreSection {
+  color: darkslategray;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 30px;
+  margin: 5px 30px;
+}
+
+.timerSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 30px;
+  margin: 5px 30px;
+}
+
+.timer {
+  background-color: darkgoldenrod;
+  padding: 10px;
+  border: 2px black;
+  border-radius: 15px;
+}
+
+.readyPrompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: darkslategray;
+}
+
+.playerReady {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  background-color: darkgoldenrod;
+  color: darkslategray;
+  border-color: darkcyan;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 20%;
+}
+button:hover {
+  background-color: blanchedalmond;
+}
+
+button:active {
+  background-color: lightblue;
+}
+
+input.playerInitials {
+  color: darkslategray;
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0px;
+  background-color: gainsboro;
+}
