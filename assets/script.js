@@ -5,14 +5,16 @@ var playerScore = document.querySelector(".playerScore");
 var score = 0;
 var clock = 101;
 
+var startSection = document.querySelector(".startSection");
+var questionSection = document.querySelector(".questionSection");
+var resultSection = document.querySelector(".resultSection");
+var questionResult = document.querySelector(".questionResult");
 var timer = document.querySelector(".timer");
 var initialsBox = document.querySelector(".playerInitialsBox");
 var initials = document.querySelector(".initials");
 var scores = document.querySelector(".playerScoreList");
 var leaderboard = [];
-var questionSection = document.querySelector(".questionSection");
 var readyPrompt = document.querySelector(".readyPrompt");
-var questionResult = document.querySelector(".questionResult");
 var playerReady = document.querySelector(".playerReady");
 var currentQuestion;
 var currentQuestionIndex = 0;
@@ -46,18 +48,49 @@ var questions = [
   },
 ];
 
+function handleAnswer(ans) {
+  console.log(ans);
+  var playerAnswer = parseInt(ans);
+  // if (playerAnswer.matches(".start") === false) {
+  var results;
+  if (
+    questions[currentQuestionIndex].choice[playerAnswer] ===
+    questions[currentQuestionIndex].answer
+  ) {
+    score = score + 1;
+    results = "CORRECT";
+    playerScore.textContent = "Your Score: " + score;
+  } else {
+    clock = clock - 15;
+    results = "INCORRECT";
+  }
+  questionResult.append = results;
+  currentQuestionIndex++;
+  if (currentQuestionIndex === questions.length) {
+    end();
+  } else {
+    showQuestion();
+  }
+}
+
 function showQuestion() {
   currentQuestion = questions[currentQuestionIndex];
-  readyPrompt.textContent = currentQuestion.title;
-  playerReady.append = "";
-
-  for (var i = 0; i < currentQuestion.length; i++) {
-    var choiceButton = Object.assign(document.createElement("button"), {
-      class: answerBtn,
-    });
-    choiceButton.textContent = i + 1 + ". " + currentQuestion.choice[i];
-    playerReady.appendChild(choiceButton);
-  }
+  // readyPrompt.textContent = currentQuestion.title;
+  var template = `
+  <h2>${currentQuestion.title}</h2>
+          <button class="answerBtn"id="0" onclick="handleAnswer(this.id)">${currentQuestion.choice[0]}</button>
+          <button class="answerBtn"id="1" onclick="handleAnswer(this.id)">${currentQuestion.choice[1]}</button>
+          <button class="answerBtn"id="2" onclick="handleAnswer(this.id)">${currentQuestion.choice[2]}</button>
+          <button class="answerBtn"id="3" onclick="handleAnswer(this.id)">${currentQuestion.choice[3]}</button>
+  `;
+  questionResult.innerHTML = template;
+  // for (var i = 0; i < currentQuestion.length; i++) {
+  //   var choiceButton = Object.assign(document.createElement("button"), {
+  //     class: answerBtn,
+  //   });
+  //   choiceButton.textContent = i + 1 + ". " + currentQuestion.choice[i];
+  //   playerReady.appendChild(choiceButton);
+  // }
 }
 
 var paused = false;
@@ -79,44 +112,24 @@ function pausedTime() {
   paused = true;
 }
 
-playerReady.addEventListener("click", function (e) {
-  var playerAnswer = e.target;
-  if (playerAnswer.matches(".start") === false) {
-    var results;
-    if (
-      playerAnswer.textContent.substring(3) ===
-      questions[currentQuestionIndex].result
-    ) {
-      score = score + 1;
-      results = "CORRECT";
-      playerScore.textContent = "Your Score: " + score;
-    } else {
-      clock = clock - 15;
-      results = "INCORRECT";
-    }
-    questionResult.append = results;
-    currentQuestionIndex++;
-    if (currentQuestionIndex === questions.length) {
-      end();
-    } else {
-      showQuestion();
-    }
-  }
-});
-
 function startQuiz() {
-  setTimer();
-  start.setAttribute("hidden", "true");
-  timer.removeAttribute("hidden");
+  // setTimer();
+  startSection.classList.add("hide");
+  questionSection.classList.remove("hide");
+  // start.setAttribute("hidden", "true");
+  // timer.removeAttribute("hidden");
   showQuestion();
 }
 
 function end() {
-  pausedTime();
-  document.querySelector("subQuestion").setAttribute("hidden", "true");
-  done.removeAttribute("hidden");
-  questionResult.textContent = "GAME OVER";
-  playerInitialsBox.removeAttribute("hidden");
+  // pausedTime();
+  questionSection.classList.add("hide");
+  resultSection.classList.remove("hide");
+
+  // document.querySelector("subQuestion").setAttribute("hidden", "true");
+  // done.removeAttribute("hidden");
+  // questionResult.textContent = "GAME OVER";
+  // playerInitialsBox.removeAttribute("hidden");
 }
 
 function submission() {
@@ -125,22 +138,6 @@ function submission() {
   playerInitialsBox.removeAttribute("hidden");
   questionResult.textContent = "Enter your initials here!";
 }
-
-start.addEventListener("click", function (e) {
-  e.preventDefault();
-  var playerInitals = playerInitals.value;
-  if (playerInitals === "") {
-    playerInitals = alert("Input valid initials");
-  } else {
-    playerInitals.value = " ";
-    var playerScore = playerInitals.concat(":", score);
-    leaderboard.push(playerScore);
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-    var rank = document.createElement("li");
-    rank.textContent = playerScore;
-    scores.appendChild(rank);
-  }
-});
 
 function showScores() {
   leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
@@ -155,3 +152,45 @@ function showScores() {
     }
   }
 }
+
+start.addEventListener("click", startQuiz);
+
+// start.addEventListener("click", function (e) {
+//   e.preventDefault();
+//   var playerInitals = playerInitals.value;
+//   if (playerInitals === "") {
+//     playerInitals = alert("Input valid initials");
+//   } else {
+//     playerInitals.value = " ";
+//     var playerScore = playerInitals.concat(":", score);
+//     leaderboard.push(playerScore);
+//     localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+//     var rank = document.createElement("li");
+//     rank.textContent = playerScore;
+//     scores.appendChild(rank);
+//   }
+//   playerReady.addEventListener("click", function (e) {
+//     var playerAnswer = e.target;
+//     if (playerAnswer.matches(".start") === false) {
+//       var results;
+//       if (
+//         playerAnswer.textContent.substring(3) ===
+//         questions[currentQuestionIndex].result
+//       ) {
+//         score = score + 1;
+//         results = "CORRECT";
+//         playerScore.textContent = "Your Score: " + score;
+//       } else {
+//         clock = clock - 15;
+//         results = "INCORRECT";
+//       }
+//       questionResult.append = results;
+//       currentQuestionIndex++;
+//       if (currentQuestionIndex === questions.length) {
+//         end();
+//       } else {
+//         showQuestion();
+//       }
+//     }
+//   });
+// });

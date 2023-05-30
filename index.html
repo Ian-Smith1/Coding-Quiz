@@ -10,31 +10,34 @@
   <body>
     <header>
       <h1 class="heading">Coding Quiz</h1>
-      <h2 class="questionResult">
+      <!-- <h2 class="questionResult">
         This quiz will test your code related knowledge
-      </h2>
+      </h2> -->
     </header>
     <div class="allItems">
-      <div class="timerAndLeaderboard">
-        <section class="timerSection">
-          <h2>TIME REMAINING</h2>
-          <article hidden class="timer"></article>
-        </section>
-        <section class="scoreSection">
-          <h3>HIGHSCORES</h3>
-          <article class="playerScore"></article>
-          <article class="playerScoreList"></article>
-        </section>
-      </div>
-      <section class="questionSection">
-        <section class="subQuestion">
-          <h2 class="readyPrompt">ARE YOU READY?</h2>
-          <div class="playerReady">
-            <button class="start">START</button>
-          </div>
-        </section>
-        <button hidden class="submit">SUBMIT</button>
-        <form hidden class="playerInitialsBox">
+      <section class="startSection">
+        <h2 class="readyPrompt">ARE YOU READY?</h2>
+        <div class="playerReady">
+          <button class="start">START</button>
+        </div>
+      </section>
+      <section class="questionSection hide">
+        <div class="timerAndLeaderboard">
+          <section class="timerSection">
+            <h2>TIME REMAINING</h2>
+            <article class="timer"></article>
+          </section>
+          <section class="scoreSection">
+            <h3>HIGHSCORES</h3>
+            <article class="playerScore"></article>
+            <article class="playerScoreList"></article>
+          </section>
+        </div>
+        <div class="questionResult"></div>
+      </section>
+      <section class="resultSection hide">
+        <form class="playerInitialsBox">
+          <button class="submit">SUBMIT</button>
           <input
             type="text"
             class="playerInitials"

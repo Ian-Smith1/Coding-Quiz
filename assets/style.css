@@ -8,6 +8,10 @@ header {
   text-align: center;
 }
 
+.hide {
+  display: none;
+}
+
 .heading {
   color: darkslategray;
   font-size: 45px;
